@@ -1,0 +1,25 @@
+server:
+    port: 8080
+    compression.enabled: true
+spring:
+    h2:
+        console:
+            enabled: true
+            path: /h2-console  # will use it as h2 client and can access it from url http://localhost:8080/h2-console
+    datasource:
+        url: jdbc:h2:mem:shajar
+        username: sa
+        password:
+        driverClassName: org.h2.Driver
+        platform: h2
+    jpa:
+        defer-datasource-initialization: true # because after spring boot 2.5 data.sql script is executed before Hibernate is initialized we need to change this
+        hibernate:
+            ddl-auto: create-drop # will drop database after application destroy
+        show-sql: true
+        properties:
+            hibernate:
+                formate_sql: true
+                validator.apply_to_ddl: false # turn off hibernate validator
+                hbm2ddl:
+                    import_files: sql/data.sql,sql/data_type.sql # insert data sql files
